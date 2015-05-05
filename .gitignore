@@ -1,0 +1,23 @@
+# Kitchen
+.kitchen/
+.kitchen.local.yml
+
+Berksfile.lock
+#*~
+#*#
+#.#*
+#\#*#
+#.*.sw[a-z]
+#*.un~
+#/cookbooks
+
+# Bundler
+#Gemfile.lock
+#bin/*
+#.bundle/*
+
+# Build artifacts
+#sloccount.sc
+#checkstyle.xml
+#.coverage
+#VERSION

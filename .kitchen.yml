@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-14.04
+  - name: centos-7.0
+
+suites:
+  - name: default
+    run_list:
+      - recipe[maxscale::default]
+    attributes:
+      maxscale:
+        server: [
+          { name: 'Server1', type: 'server', address: '10.0.0.1', port: 3000, protocol: 'MySQLBackend' },
+          { name: 'Server2', type: 'server', address: '10.0.0.2', port: 3000, protocol: 'MySQLBackend' },
+          { name: 'Server3', type: 'server', address: '10.0.0.3', port: 3000, protocol: 'MySQLBackend' }
+          ]
+        threads: 2
