@@ -22,12 +22,12 @@ if node['maxscale']['server'].empty?
   return
 end
 
+include_recipe 'maxscale::repo'
+include_recipe 'maxscale::install'
+include_recipe 'maxscale::configure'
+
 service 'maxscale' do
   supports reload: true, status: true, restart: true
   action :enable
   subscribes :reload, 'template[/usr/local/skysql/maxscale/etc/MaxScale.cnf]', :immediately
 end
-
-include_recipe 'maxscale::repo'
-include_recipe 'maxscale::install'
-include_recipe 'maxscale::configure'

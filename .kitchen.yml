@@ -20,4 +20,9 @@ suites:
           { name: 'Server2', type: 'server', address: '10.0.0.2', port: 3000, protocol: 'MySQLBackend' },
           { name: 'Server3', type: 'server', address: '10.0.0.3', port: 3000, protocol: 'MySQLBackend' }
           ]
+        filter: [
+          { name: 'qla', module: 'qlafilter', options: '/tmp/QueryLog' },
+          { name: 'fetch', module: 'regexfilter', match: 'fetch', replace: 'select' },
+          { name: 'topf', module: 'topfilter', count: 10, filebase: '/var/log/myapp/session' },
+          { name: 'teef', module: 'teefilter', match: 'insert.*HighScore.*values', service: 'Cassandra' }        ]
         threads: 2

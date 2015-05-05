@@ -19,56 +19,83 @@ The following 64-bit platforms are supported:
 
 ## Attributes
 
-* `['maxscale']['threads']`
-  - Number of worker threads in MaxScale
+| attribute                    | Type      | Default | description                              |
+|:-----------------------------|:---------:|:-------:|:-----------------------------------------|
+| `node['maxscale']['threads']`| `Integer` | `4`     | Number of worker threads in MaxScale     |
+
 
 ### Definition of the monitor
-* `['maxscale']['monitor']['module']`
-  - Currently valid options for all monitors are: mysqlmon|galeramon
-* `['maxscale']['monitor']['user']`
-* `['maxscale']['monitor']['pwd']`
-* `['maxscale']['monitor']['interval']`
+| attribute                                | Type        | Default   | description                             |
+|:-----------------------------------------|:-----------:|:---------:|:----------------------------------------|
+| `node['maxscale']['monitor']['module']`  | `String`    | `mysqlmon`|                                         |
+| `node['maxscale']['monitor']['user']`    | `String`    | `myuser`  | Currently valid options for all monitors are: mysqlmon|galeramon |
+| `node['maxscale']['monitor']['pwd']`     | `String`    | `mypwd`   |                                         |
+| `node['maxscale']['monitor']['interval']`| `Integer`   | `10000`   |                                         |
+| `node['maxscale']['monitor']['backend_connect_timeout']`  | `Integer` | `''` |                               |
+| `node['maxscale']['monitor']['backend_read_timeout']`     | `Integer` | `''` |                               |
+| `node['maxscale']['monitor']['backend_write_timeout']`    | `Integer` | `''` |                               |
+| `node['maxscale']['monitor']['detect_replication_lag']`   | `Integer` | `''` |                               |
+| `node['maxscale']['monitor']['detect_stale_master']`      | `Integer` | `''` |                               |
+| `node['maxscale']['monitor']['disable_master_failback']`  | `Integer` | `''` |                               |
 
 ### Read Connection Router Config
-* `['maxscale']['read_connection_router']['enabled']`
-* `['maxscale']['read_connection_router']['user']`
-* `['maxscale']['read_connection_router']['pwd']`
-* `['maxscale']['read_connection_router']['option']`
-  - router_options = master|slave|synced
+| attribute                                               | Type      | Default  | description             |
+|:--------------------------------------------------------|:---------:|:--------:|:------------------------|
+| `node['maxscale']['read_connection_router']['enabled']` | `Boolen`  | `true`   |                         |
+| `node['maxscale']['read_connection_router']['user']`    | `String`  | `myuser` |                         |
+| `node['maxscale']['read_connection_router']['pwd']`     | `String`  | `mypwd`  |                         |
+| `node['maxscale']['read_connection_router']['option']`  | `String`  | `slave`  | master|slave|synced     |
 
 ### RW Split Router Conifg
-* `['maxscale']['rw_split_router']['enabled']`
-* `['maxscale']['rw_split_router']['user']`
-* `['maxscale']['rw_split_router']['pwd']`
+| attribute                                        | Type      | Default |
+|:-------------------------------------------------|:---------:|:-------:|
+| `node['maxscale']['rw_split_router']['enabled']` | `Boolen`  | `true`  |
+| `node['maxscale']['rw_split_router']['user']`    | `String`  | `myuser`|
+| `node['maxscale']['rw_split_router']['pwd']`     | `String`  | `mypwd` |
 
 ### Read Connection Listener Config
-* `['maxscale']['read_connection_listener']['enabled']`
-* `['maxscale']['read_connection_listener']['address']`
-* `['maxscale']['read_connection_listener']['port']`
+| attribute                                                 | Type      | Default      |
+|:----------------------------------------------------------|:---------:|:------------:|
+| `node['maxscale']['read_connection_listener']['enabled']` | `Boolen`  | `true`       |
+| `node['maxscale']['read_connection_listener']['address']` | `String`  | `127.0.0.1`  |
+| `node['maxscale']['read_connection_listener']['port']`    | `Integer` | `4008`       |
 
 ### RW Split Listener Config
-* `['maxscale']['rw_split_listener']['enabled']`
-* `['maxscale']['rw_split_listener']['address']`
-* `['maxscale']['rw_split_listener']['port']`
+| attribute                                          | Type      | Default     |
+|:---------------------------------------------------|:---------:|:-----------:|
+| `node['maxscale']['rw_split_listener']['enabled']` | `Boolen`  | `true`      |
+| `node['maxscale']['rw_split_listener']['address']` | `String`  | `127.0.0.1` |
+| `node['maxscale']['rw_split_listener']['port']`    | `Integer` | `4406`      |
 
 ### Debug Listener Config
-* `['maxscale']['debug_listener']['enabled']`
-* `['maxscale']['debug_listener']['address']`
-* `['maxscale']['debug_listener']['port']`
+| attribute                                       | Type      | Default      |
+|:------------------------------------------------|:---------:|:------------:|
+| `node['maxscale']['debug_listener']['enabled']` | `Boolen`  | `true`       |
+| `node['maxscale']['debug_listener']['address']` | `String`  | `127.0.0.1`  |
+| `node['maxscale']['debug_listener']['port']`    | `Integer` | `4442`       |
 
 ### CLI Listener Config
-* `['maxscale']['cli_listener']['enabled']`
-* `['maxscale']['cli_listener']['address']`
-* `['maxscale']['cli_listener']['port']`
+| attribute                                     | Type      | Default     |
+|:----------------------------------------------|:---------:|:-----------:|
+| `node['maxscale']['cli_listener']['enabled']` | `Boolen`  | `true`      |
+| `node['maxscale']['cli_listener']['address']` | `String`  | `127.0.0.1` |
+| `node['maxscale']['cli_listener']['port']`    | `Integer` | `6603`      |
 
 ### Server Definition
-* `['maxscale']['server']`
+| attribute                      | Type      | Default     | description             |
+|:-------------------------------|:---------:|:-----------:|:------------------------|
+| `node['maxscale']['server']`   | `Array`   | `[]`         | Please see usage        |
+
+### Filter Definition
+| attribute                     | Type      | Default     | description             |
+|:------------------------------|:---------:|:-----------:|:------------------------|
+| `node['maxscale']['server']`  | `Array`   | `[]`        |  Please see usage       |
 
 ## Usage
 
 Include your server in your `node attributes`:
 
-```json
+```
 ['maxscale']['server'] = [
   { name: 'Server1', type: 'server', address: '10.0.0.1', port: 3000, protocol: 'MySQLBackend' },
   { name: 'Server2', type: 'server', address: '10.0.0.2', port: 3000, protocol: 'MySQLBackend' },
@@ -86,6 +113,17 @@ and include `maxscale` in your node's `run_list`:
     "recipe[maxscale]"
   ]
 }
+```
+
+You can create filter like this:
+
+```
+['maxscale']['filter'] = [
+  { name: 'qla', module: 'qlafilter', options: '/tmp/QueryLog' },
+  { name: 'fetch', module: 'regexfilter', match: 'fetch', replace: 'select' },
+  { name: 'topf', module: 'topfilter', count: 10, filebase: '/var/log/myapp/session' },
+  { name: 'teef', module: 'teefilter', match: 'insert.*HighScore.*values', service: 'Cassandra' }
+]
 ```
 
 ## Contributing

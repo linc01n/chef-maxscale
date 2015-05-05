@@ -13,26 +13,26 @@ threads=<%= node['maxscale']['threads'] %>
 [MySQL Monitor]
 type=monitor
 module=mysqlmon
-servers=<% node['maxscale']['server'].each do |server| %><%= server[:name] %>,<% end %>
+servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
 user=<%= node['maxscale']['monitor']['user'] %>
 passwd=<%= node['maxscale']['monitor']['pwd'] %>
 monitor_interval=<%= node['maxscale']['monitor']['interval'] %>
-#backend_connect_timeout=
-#backend_read_timeout=
-#backend_write_timeout=
-#detect_replication_lag=
-#detect_stale_master=
+backend_connect_timeout=<%= node['maxscale']['monitor']['backend_connect_timeout'] %>
+backend_read_timeout=<%= node['maxscale']['monitor']['backend_read_timeout'] %>
+backend_write_timeout=<%= node['maxscale']['monitor']['backend_write_timeout'] %>
+detect_replication_lag=<%= node['maxscale']['monitor']['detect_replication_lag'] %>
+detect_stale_master=<%= node['maxscale']['monitor']['detect_stale_master'] %>
 <% end %>
 
 <% if node['maxscale']['monitor']['module'] == 'galeramon' %>
 [Galera Monitor]
 type=monitor
 module=galeramon
-servers=<% node['maxscale']['server'].each do |server| %><%= server[:name] %>,<% end %>
+servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
 user=<%= node['maxscale']['monitor']['user'] %>
 passwd=<%= node['maxscale']['monitor']['pwd'] %>
 monitor_interval=<%= node['maxscale']['monitor']['monitor_interval'] %>
-#disable_master_failback=
+disable_master_failback=<%= node['maxscale']['monitor']['disable_master_failback'] %>
 <% end %>
 
 ## Filter definition
@@ -68,17 +68,27 @@ monitor_interval=<%= node['maxscale']['monitor']['monitor_interval'] %>
 #
 ## Examples:
 
-[qla]
+<% node['maxscale']['filter'].each do |filter| %>
+[<%= filter[:name] %>]
 type=filter
-module=qlafilter
-options=/tmp/QueryLog
+module=<%= filter[:module] %>
+<% if filter[:module] == 'qlafilter' %>
+options=<%= filter[:optinos] %>
+<% end %>
+<% if filter[:module] == 'regexfilter' %>
+match=<%= filter[:match] %>
+replace=<%= filter[:replace] %>
+<% end %>
+<% if filter[:module] == 'topfilter' %>
+count=<%= filter[:count] %>
+filebase=<%= filter[:filebase] %>
+<% end %>
+<% if filter[:module] == 'teefilter' %>
+match=<%= filter[:match] %>
+service=<%= filter[:service] %>
+<% end %>
 
-[fetch]
-type=filter
-module=regexfilter
-match=fetch
-replace=select
-
+<% end %>
 
 # A series of service definition
 
@@ -86,7 +96,7 @@ replace=select
 [Read Connection Router]
 type=service
 router=readconnroute
-servers=<% node['maxscale']['server'].each do |server| %><%= server[:name] %>,<% end %>
+servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
 user=<%= node['maxscale']['read_connection_router']['user'] %>
 passwd=<%= node['maxscale']['read_connection_router']['pwd'] %>
 router_options=<%= node['maxscale']['read_connection_router']['option'] %>
@@ -96,7 +106,7 @@ router_options=<%= node['maxscale']['read_connection_router']['option'] %>
 [RW Split Router]
 type=service
 router=readwritesplit
-servers=<% node['maxscale']['server'].each do |server| %><%= server[:name] %>,<% end %>
+servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
 user=<%= node['maxscale']['rw_split_router']['user'] %>
 passwd=<%= node['maxscale']['rw_split_router']['pwd'] %>
 #use_sql_variables_in=
@@ -156,7 +166,7 @@ port=<%= node['maxscale']['cli_listener']['port'] %>
 
 <% node['maxscale']['server'].each do |server| %>
 [<%= server[:name] %>]
-type=<%= server[:type] %>
+type=server
 address=<%= server[:address] %>
 port=<%= server[:port] %>
 protocol=<%= server[:protocol] %>

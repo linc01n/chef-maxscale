@@ -20,19 +20,23 @@
 # Number of worker threads in MaxScale
 default['maxscale']['threads'] = 4
 
-# Currently valid options for all monitors are:
-# module=[mysqlmon|galeramon]
 # Definition of the monitor
 default['maxscale']['monitor']['module'] = 'mysqlmon'
 default['maxscale']['monitor']['user'] = 'myuser'
 default['maxscale']['monitor']['pwd'] = 'mypwd'
 default['maxscale']['monitor']['interval'] = 10_000
+default['maxscale']['monitor']['backend_connect_timeout'] = ''
+default['maxscale']['monitor']['backend_read_timeout'] = ''
+default['maxscale']['monitor']['backend_write_timeout'] = ''
+default['maxscale']['monitor']['detect_replication_lag'] = ''
+default['maxscale']['monitor']['detect_stale_master'] = ''
+default['maxscale']['monitor']['disable_master_failback'] = ''
 
 # Read Connection Router config
 default['maxscale']['read_connection_router']['enabled'] = true
 default['maxscale']['read_connection_router']['user'] = 'myuser'
 default['maxscale']['read_connection_router']['pwd'] = 'mypwd'
-default['maxscale']['read_connection_router']['option'] = 'slave' #	router_options = master|slave|synced
+default['maxscale']['read_connection_router']['option'] = 'slave'
 
 # RW Split Router conifg
 default['maxscale']['rw_split_router']['enabled'] = true
@@ -60,10 +64,7 @@ default['maxscale']['cli_listener']['address'] = '127.0.0.1'
 default['maxscale']['cli_listener']['port'] = '6603'
 
 # Definition of the servers
-# default['maxscale']['server'] = [
-#  { name: 'Server1', type: 'server', address: '10.0.0.1', port: 3000, protocol: 'MySQLBackend' },
-#  { name: 'Server2', type: 'server', address: '10.0.0.2', port: 3000, protocol: 'MySQLBackend' },
-#  { name: 'Server3', type: 'server', address: '10.0.0.3', port: 3000, protocol: 'MySQLBackend' }
-# ]
-
 default['maxscale']['server'] = []
+
+# Definition of the filters
+default['maxscale']['filter'] = []
