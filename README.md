@@ -1,5 +1,4 @@
-maxscale Cookbook
-=================
+# maxscale Cookbook [![Build Status](https://travis-ci.org/DennisBP/chef-maxscale.svg?branch=master)](https://travis-ci.org/DennisBP/chef-maxscale)
 
 This cookbook installs and configure maxscale from the MariaDB repositroy.
 
