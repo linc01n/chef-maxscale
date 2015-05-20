@@ -81,14 +81,20 @@ The following 64-bit platforms are supported:
 | `node['maxscale']['cli_listener']['port']`    | `Integer` | `6603`      |
 
 ### Server Definition
-| attribute                      | Type      | Default     | description             |
-|:-------------------------------|:---------:|:-----------:|:------------------------|
-| `node['maxscale']['server']`   | `Array`   | `[]`         | Please see usage        |
+| attribute                                            | Type      | Default     | description                   |
+|:-----------------------------------------------------|:---------:|:-----------:|:------------------------------|
+| `node['maxscale']['server']`                         | `Array`   | `[]`        | Please see usage              |
+| `node['maxscale']['databag']['server']['enabled']`   | `Boolen`  | `false`     | Please see usage              |
+| `node['maxscale']['databag']['server']['name']`      | `String`  | `maxscale`  | Please see usage              |
+| `node['maxscale']['databag']['server']['item_name']` | `String`  | `server`    | Please see usage              |
 
 ### Filter Definition
-| attribute                     | Type      | Default     | description             |
-|:------------------------------|:---------:|:-----------:|:------------------------|
-| `node['maxscale']['server']`  | `Array`   | `[]`        |  Please see usage       |
+| attribute                                            | Type      | Default     | description                   |
+|:-----------------------------------------------------|:---------:|:-----------:|:------------------------------|
+| `node['maxscale']['filter']`                         | `Array`   | `[]`        | Please see usage              |
+| `node['maxscale']['databag']['filter']['enabled']`   | `Boolen`  | `false`     | Please see usage              |
+| `node['maxscale']['databag']['filter']['name']`      | `String`  | `maxscale`  | Please see usage              |
+| `node['maxscale']['databag']['filter']['item_name']` | `String`  | `filter`    | Please see usage              |
 
 ## Usage
 

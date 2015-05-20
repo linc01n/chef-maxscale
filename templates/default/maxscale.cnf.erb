@@ -13,7 +13,7 @@ threads=<%= node['maxscale']['threads'] %>
 [MySQL Monitor]
 type=monitor
 module=mysqlmon
-servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
+servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
 user=<%= node['maxscale']['monitor']['user'] %>
 passwd=<%= node['maxscale']['monitor']['pwd'] %>
 monitor_interval=<%= node['maxscale']['monitor']['interval'] %>
@@ -28,64 +28,33 @@ detect_stale_master=<%= node['maxscale']['monitor']['detect_stale_master'] %>
 [Galera Monitor]
 type=monitor
 module=galeramon
-servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
+servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
 user=<%= node['maxscale']['monitor']['user'] %>
 passwd=<%= node['maxscale']['monitor']['pwd'] %>
 monitor_interval=<%= node['maxscale']['monitor']['monitor_interval'] %>
 disable_master_failback=<%= node['maxscale']['monitor']['disable_master_failback'] %>
 <% end %>
 
-## Filter definition
-#
-# Type specifies the section
-#
-#	type=filter
-#
-# Module specifies which module implements the filter function
-#
-#	module=[qlafilter|regexfilter|topfilter|teefilter]
-#
-# Options specify the log file for Query Log Filter
-#
-#	options=<path to logfile>
-#
-# Match and replace are used in regexfilter
-#
-#	match=fetch
-#	replace=select
-#
-# Count and filebase are used with topfilter to specify how many top queries are
-# listed and where.
-#
-#	count=<count>
-#	filebase=<path to output file>
-#
-# Match and service are used by tee filter to specify what queries should be
-# duplicated and where the copy should be routed.
-#
-#	match=insert.*HighScore.*values
-#	service=Cassandra
-#
-## Examples:
+# Filter definition
 
-<% node['maxscale']['filter'].each do |filter| %>
-[<%= filter[:name] %>]
+<% @maxscale_filters.each do |filter| %>
+[<%= filter['name'] %>]
 type=filter
-module=<%= filter[:module] %>
-<% if filter[:module] == 'qlafilter' %>
-options=<%= filter[:optinos] %>
+module=<%= filter['module'] %>
+<% if filter['module'] == 'qlafilter' %>
+options=<%= filter['optinos'] %>
 <% end %>
-<% if filter[:module] == 'regexfilter' %>
-match=<%= filter[:match] %>
-replace=<%= filter[:replace] %>
+<% if filter['module'] == 'regexfilter' %>
+match=<%= filter['match'] %>
+replace=<%= filter['replace'] %>
 <% end %>
-<% if filter[:module] == 'topfilter' %>
-count=<%= filter[:count] %>
-filebase=<%= filter[:filebase] %>
+<% if filter['module'] == 'topfilter' %>
+count=<%= filter['count'] %>
+filebase=<%= filter['filebase'] %>
 <% end %>
-<% if filter[:module] == 'teefilter' %>
-match=<%= filter[:match] %>
-service=<%= filter[:service] %>
+<% if filter['module'] == 'teefilter' %>
+match=<%= filter['match'] %>
+service=<%= filter['service'] %>
 <% end %>
 
 <% end %>
@@ -96,7 +65,7 @@ service=<%= filter[:service] %>
 [Read Connection Router]
 type=service
 router=readconnroute
-servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
+servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
 user=<%= node['maxscale']['read_connection_router']['user'] %>
 passwd=<%= node['maxscale']['read_connection_router']['pwd'] %>
 router_options=<%= node['maxscale']['read_connection_router']['option'] %>
@@ -106,7 +75,7 @@ router_options=<%= node['maxscale']['read_connection_router']['option'] %>
 [RW Split Router]
 type=service
 router=readwritesplit
-servers=<%= node['maxscale']['server'].map { |server| server[:name] }.join(',') %>
+servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
 user=<%= node['maxscale']['rw_split_router']['user'] %>
 passwd=<%= node['maxscale']['rw_split_router']['pwd'] %>
 #use_sql_variables_in=
@@ -164,11 +133,12 @@ port=<%= node['maxscale']['cli_listener']['port'] %>
 
 # Definition of the servers
 
-<% node['maxscale']['server'].each do |server| %>
-[<%= server[:name] %>]
-type=server
-address=<%= server[:address] %>
-port=<%= server[:port] %>
-protocol=<%= server[:protocol] %>
+<% @maxscale_servers.each do |server| %>
+<% p server.class.name %>
+[<%= server['name'] %>]
+type=<%= server['type'] %>
+address=<%= server['address'] %>
+port=<%= server['port'] %>
+protocol=<%= server['protocol'] %>
 
 <% end %>
