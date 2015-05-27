@@ -65,6 +65,12 @@ default['maxscale']['cli_listener']['port'] = '6603'
 
 # Definition of the servers
 default['maxscale']['server'] = []
+default['maxscale']['databag']['server']['enabled'] = false
+default['maxscale']['databag']['server']['name'] = 'maxscale'
+default['maxscale']['databag']['server']['item_name'] = 'server'
 
 # Definition of the filters
 default['maxscale']['filter'] = []
+default['maxscale']['databag']['filter']['enabled'] = false
+default['maxscale']['databag']['filter']['name'] = 'maxscale'
+default['maxscale']['databag']['filter']['item_name'] = 'filter'

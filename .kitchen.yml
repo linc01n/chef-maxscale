@@ -7,6 +7,8 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
+    run_list:
+      - recipe[apt::default]
   - name: centos-7.0
 
 suites:
@@ -24,5 +26,11 @@ suites:
           { name: 'qla', module: 'qlafilter', options: '/tmp/QueryLog' },
           { name: 'fetch', module: 'regexfilter', match: 'fetch', replace: 'select' },
           { name: 'topf', module: 'topfilter', count: 10, filebase: '/var/log/myapp/session' },
-          { name: 'teef', module: 'teefilter', match: 'insert.*HighScore.*values', service: 'Cassandra' }        ]
+          { name: 'teef', module: 'teefilter', match: 'insert.*HighScore.*values', service: 'Cassandra' }
+          ]
+        databag:
+          filter:
+            enabled: true
+          server:
+            enabled: true
         threads: 2

@@ -1,0 +1,28 @@
+{
+  "id": "filter",
+  "filter": [
+    {
+      "name": "qla_DataBag",
+      "module": "qlafilter",
+      "options": "/tmp/QueryLog"
+      },
+    {
+      "name": "fetch_DataBag",
+      "module": "regexfilter",
+      "match": "fetch",
+      "replace": "select"
+      },
+    {
+      "name": "topf_DataBag",
+      "module": "topfilter",
+      "count": 10,
+      "filebase": "/var/log/myapp/session"
+      },
+    {
+      "name": "teef_DataBag",
+      "module": "teefilter",
+      "match": "insert.*HighScore.*values",
+      "service": "Cassandra"
+      }
+  ]
+}

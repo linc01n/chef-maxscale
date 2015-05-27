@@ -17,8 +17,33 @@
 # limitations under the License.
 #
 
+all_filters = []
+all_servers = []
+
+if node['maxscale']['databag']['filter']['enabled']
+  # Load filter from Data Bags
+  databag_filter = data_bag_item(node['maxscale']['databag']['filter']['name'], \
+                                 node['maxscale']['databag']['filter']['item_name'])
+  all_filters = node['maxscale']['filter'] + databag_filter['filter']
+else
+  all_filters = node['maxscale']['filter']
+end
+
+if node['maxscale']['databag']['server']['enabled']
+  # Load servers from Data Bags
+  databag_server = data_bag_item(node['maxscale']['databag']['server']['name'], \
+                                 node['maxscale']['databag']['server']['item_name'])
+  all_servers = node['maxscale']['server'] + databag_server['server']
+else
+  all_servers = node['maxscale']['server']
+end
+
 template '/usr/local/skysql/maxscale/etc/MaxScale.cnf' do
   source 'maxscale.cnf.erb'
   action :create
   notifies :restart, 'service[maxscale]', :delayed
+  variables(
+    maxscale_filters: all_filters,
+    maxscale_servers: all_servers
+    )
 end
