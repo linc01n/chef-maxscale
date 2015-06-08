@@ -22,6 +22,16 @@ suites:
           { name: 'Server2', type: 'server', address: '10.0.0.2', port: 3000, protocol: 'MySQLBackend' },
           { name: 'Server3', type: 'server', address: '10.0.0.3', port: 3000, protocol: 'MySQLBackend' }
           ]
+        listener: [
+          { name: 'Read Connection Listener', type: 'listener', service: 'Read Connection Router',
+            protocol: 'MySQLClient', address: '127.0.0.1', port: 4408 },
+          { name: 'RW Split Listener', type: 'listener', service: 'RW Split Router',
+            protocol: 'MySQLClient', address: '127.0.0.1', port: 4406 }
+        ]
+        router: [
+          { name: 'Read Connection Router', type: 'service', router: 'readconnroute', user: 'myuser', passwd: 'mypwd' },
+          { name: 'RW Split Router', type: 'service', router: 'readwritesplit', user: 'myuser', passwd: 'mypwd' }
+        ]
         filter: [
           { name: 'qla', module: 'qlafilter', options: '/tmp/QueryLog' },
           { name: 'fetch', module: 'regexfilter', match: 'fetch', replace: 'select' },

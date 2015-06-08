@@ -42,7 +42,7 @@ disable_master_failback=<%= node['maxscale']['monitor']['disable_master_failback
 type=filter
 module=<%= filter['module'] %>
 <% if filter['module'] == 'qlafilter' %>
-options=<%= filter['optinos'] %>
+options=<%= filter['options'] %>
 <% end %>
 <% if filter['module'] == 'regexfilter' %>
 match=<%= filter['match'] %>
@@ -61,80 +61,31 @@ service=<%= filter['service'] %>
 
 # A series of service definition
 
-<% if node['maxscale']['read_connection_router']['enabled'] %>
-[Read Connection Router]
-type=service
-router=readconnroute
+<% @maxscale_routers.each do |router| %>
+[<%= router['name'] %>]
+type=<%= router['type'] %>
+router=<%= router['router'] %>
 servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
-user=<%= node['maxscale']['read_connection_router']['user'] %>
-passwd=<%= node['maxscale']['read_connection_router']['pwd'] %>
-router_options=<%= node['maxscale']['read_connection_router']['option'] %>
+user=<%= router['user'] %>
+passwd=<%= router['passwd'] %>
+
 <% end %>
-
-<% if node['maxscale']['rw_split_router']['enabled'] %>
-[RW Split Router]
-type=service
-router=readwritesplit
-servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
-user=<%= node['maxscale']['rw_split_router']['user'] %>
-passwd=<%= node['maxscale']['rw_split_router']['pwd'] %>
-#use_sql_variables_in=
-#max_slave_connections=100%
-#max_slave_replication_lag=21
-#router_options=slave_selection_criteria=
-#filters=fetch|qla
-<% end %>
-
-[Debug Interface]
-type=service
-router=debugcli
-
-[CLI]
-type=service
-router=cli
 
 # Listener definitions for the services
 
-<% if node['maxscale']['read_connection_listener']['enabled'] %>
-[Read Connection Listener]
-type=listener
-service=Read Connection Router
-protocol=MySQLClient
-address=<%= node['maxscale']['read_connection_listener']['address'] %>
-port=<%= node['maxscale']['read_connection_listener']['port'] %>
-<% end %>
+<% @maxscale_listeners.each do |listener| %>
+[<%= listener['name'] %>]
+type=<%= listener['type'] %>
+service=<%= listener['service'] %>
+protocol=<%= listener['protocol'] %>
+address=<%= listener['address'] %>
+port=<%= listener['port'] %>
 
-<% if node['maxscale']['rw_split_listener']['enabled'] %>
-[RW Split Listener]
-type=listener
-service=RW Split Router
-protocol=MySQLClient
-address=<%= node['maxscale']['rw_split_listener']['address'] %>
-port=<%= node['maxscale']['rw_split_listener']['port'] %>
-<% end %>
-
-<% if node['maxscale']['debug_listener']['enabled'] %>
-[Debug Listener]
-type=listener
-service=Debug Interface
-protocol=telnetd
-address=<%= node['maxscale']['debug_listener']['address'] %>
-port=<%= node['maxscale']['debug_listener']['port'] %>
-<% end %>
-
-<% if node['maxscale']['cli_listener']['enabled'] %>
-[CLI Listener]
-type=listener
-service=CLI
-protocol=maxscaled
-address=<%= node['maxscale']['cli_listener']['address'] %>
-port=<%= node['maxscale']['cli_listener']['port'] %>
 <% end %>
 
 # Definition of the servers
 
 <% @maxscale_servers.each do |server| %>
-<% p server.class.name %>
 [<%= server['name'] %>]
 type=<%= server['type'] %>
 address=<%= server['address'] %>
