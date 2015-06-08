@@ -27,7 +27,7 @@ The following 64-bit platforms are supported:
 | attribute                                | Type        | Default   | description                             |
 |:-----------------------------------------|:-----------:|:---------:|:----------------------------------------|
 | `node['maxscale']['monitor']['module']`  | `String`    | `mysqlmon`|                                         |
-| `node['maxscale']['monitor']['user']`    | `String`    | `myuser`  | Currently valid options for all monitors are: mysqlmon|galeramon |
+| `node['maxscale']['monitor']['user']`    | `String`    | `myuser`  | Currently valid options for all monitors are: mysqlmon and galeramon |
 | `node['maxscale']['monitor']['pwd']`     | `String`    | `mypwd`   |                                         |
 | `node['maxscale']['monitor']['interval']`| `Integer`   | `10000`   |                                         |
 | `node['maxscale']['monitor']['backend_connect_timeout']`  | `Integer` | `''` |                               |
@@ -84,17 +84,17 @@ The following 64-bit platforms are supported:
 | attribute                                            | Type      | Default     | description                   |
 |:-----------------------------------------------------|:---------:|:-----------:|:------------------------------|
 | `node['maxscale']['server']`                         | `Array`   | `[]`        | Please see usage              |
-| `node['maxscale']['databag']['server']['enabled']`   | `Boolen`  | `false`     | Please see usage              |
-| `node['maxscale']['databag']['server']['name']`      | `String`  | `maxscale`  | Please see usage              |
-| `node['maxscale']['databag']['server']['item_name']` | `String`  | `server`    | Please see usage              |
+| `node['maxscale']['databag']['server']['enabled']`   | `Boolen`  | `false`     | Enable Data Bags support      |
+| `node['maxscale']['databag']['server']['name']`      | `String`  | `maxscale`  | Data Bag name                 |
+| `node['maxscale']['databag']['server']['item_name']` | `String`  | `server`    | Data Bag Item name            |
 
 ### Filter Definition
 | attribute                                            | Type      | Default     | description                   |
 |:-----------------------------------------------------|:---------:|:-----------:|:------------------------------|
 | `node['maxscale']['filter']`                         | `Array`   | `[]`        | Please see usage              |
-| `node['maxscale']['databag']['filter']['enabled']`   | `Boolen`  | `false`     | Please see usage              |
-| `node['maxscale']['databag']['filter']['name']`      | `String`  | `maxscale`  | Please see usage              |
-| `node['maxscale']['databag']['filter']['item_name']` | `String`  | `filter`    | Please see usage              |
+| `node['maxscale']['databag']['filter']['enabled']`   | `Boolen`  | `false`     | Enable Data Bags support      |
+| `node['maxscale']['databag']['filter']['name']`      | `String`  | `maxscale`  | Data Bag name                 |
+| `node['maxscale']['databag']['filter']['item_name']` | `String`  | `filter`    | Data Bag Item name            |
 
 ## Usage
 
@@ -130,6 +130,7 @@ You can create filter like this:
   { name: 'teef', module: 'teefilter', match: 'insert.*HighScore.*values', service: 'Cassandra' }
 ]
 ```
+#### Data Bag support is also available.
 
 ## Contributing
 
