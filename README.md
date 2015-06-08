@@ -37,49 +37,6 @@ The following 64-bit platforms are supported:
 | `node['maxscale']['monitor']['detect_stale_master']`      | `Integer` | `''` |                               |
 | `node['maxscale']['monitor']['disable_master_failback']`  | `Integer` | `''` |                               |
 
-### Read Connection Router Config
-| attribute                                               | Type      | Default  | description             |
-|:--------------------------------------------------------|:---------:|:--------:|:------------------------|
-| `node['maxscale']['read_connection_router']['enabled']` | `Boolen`  | `true`   |                         |
-| `node['maxscale']['read_connection_router']['user']`    | `String`  | `myuser` |                         |
-| `node['maxscale']['read_connection_router']['pwd']`     | `String`  | `mypwd`  |                         |
-| `node['maxscale']['read_connection_router']['option']`  | `String`  | `slave`  | master|slave|synced     |
-
-### RW Split Router Conifg
-| attribute                                        | Type      | Default |
-|:-------------------------------------------------|:---------:|:-------:|
-| `node['maxscale']['rw_split_router']['enabled']` | `Boolen`  | `true`  |
-| `node['maxscale']['rw_split_router']['user']`    | `String`  | `myuser`|
-| `node['maxscale']['rw_split_router']['pwd']`     | `String`  | `mypwd` |
-
-### Read Connection Listener Config
-| attribute                                                 | Type      | Default      |
-|:----------------------------------------------------------|:---------:|:------------:|
-| `node['maxscale']['read_connection_listener']['enabled']` | `Boolen`  | `true`       |
-| `node['maxscale']['read_connection_listener']['address']` | `String`  | `127.0.0.1`  |
-| `node['maxscale']['read_connection_listener']['port']`    | `Integer` | `4008`       |
-
-### RW Split Listener Config
-| attribute                                          | Type      | Default     |
-|:---------------------------------------------------|:---------:|:-----------:|
-| `node['maxscale']['rw_split_listener']['enabled']` | `Boolen`  | `true`      |
-| `node['maxscale']['rw_split_listener']['address']` | `String`  | `127.0.0.1` |
-| `node['maxscale']['rw_split_listener']['port']`    | `Integer` | `4406`      |
-
-### Debug Listener Config
-| attribute                                       | Type      | Default      |
-|:------------------------------------------------|:---------:|:------------:|
-| `node['maxscale']['debug_listener']['enabled']` | `Boolen`  | `true`       |
-| `node['maxscale']['debug_listener']['address']` | `String`  | `127.0.0.1`  |
-| `node['maxscale']['debug_listener']['port']`    | `Integer` | `4442`       |
-
-### CLI Listener Config
-| attribute                                     | Type      | Default     |
-|:----------------------------------------------|:---------:|:-----------:|
-| `node['maxscale']['cli_listener']['enabled']` | `Boolen`  | `true`      |
-| `node['maxscale']['cli_listener']['address']` | `String`  | `127.0.0.1` |
-| `node['maxscale']['cli_listener']['port']`    | `Integer` | `6603`      |
-
 ### Server Definition
 | attribute                                            | Type      | Default     | description                   |
 |:-----------------------------------------------------|:---------:|:-----------:|:------------------------------|
@@ -95,6 +52,22 @@ The following 64-bit platforms are supported:
 | `node['maxscale']['databag']['filter']['enabled']`   | `Boolen`  | `false`     | Enable Data Bags support      |
 | `node['maxscale']['databag']['filter']['name']`      | `String`  | `maxscale`  | Data Bag name                 |
 | `node['maxscale']['databag']['filter']['item_name']` | `String`  | `filter`    | Data Bag Item name            |
+
+### Listener Definition
+| attribute                                              | Type      | Default     | description                   |
+|:-------------------------------------------------------|:---------:|:-----------:|:------------------------------|
+| `node['maxscale']['filter']`                           | `Array`   | `[]`        | Please see usage              |
+| `node['maxscale']['databag']['listener']['enabled']`   | `Boolen`  | `false`     | Enable Data Bags support      |
+| `node['maxscale']['databag']['listener']['name']`      | `String`  | `maxscale`  | Data Bag name                 |
+| `node['maxscale']['databag']['listener']['item_name']` | `String`  | `listener`  | Data Bag Item name            |
+
+### Router Definition
+| attribute                                            | Type      | Default     | description                   |
+|:-----------------------------------------------------|:---------:|:-----------:|:------------------------------|
+| `node['maxscale']['filter']`                         | `Array`   | `[]`        | Please see usage              |
+| `node['maxscale']['databag']['router']['enabled']`   | `Boolen`  | `false`     | Enable Data Bags support      |
+| `node['maxscale']['databag']['router']['name']`      | `String`  | `maxscale`  | Data Bag name                 |
+| `node['maxscale']['databag']['router']['item_name']` | `String`  | `router`    | Data Bag Item name            |
 
 ## Usage
 
