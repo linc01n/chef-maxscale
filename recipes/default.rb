@@ -17,11 +17,6 @@
 # limitations under the License.
 #
 
-if node['maxscale']['server'].empty?
-  Chef::Log.info 'No backend server specified - exiting'
-  return
-end
-
 include_recipe 'maxscale::repo'
 include_recipe 'maxscale::install'
 include_recipe 'maxscale::configure'

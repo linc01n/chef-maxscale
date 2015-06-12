@@ -4,92 +4,12 @@
 # Global parameters
 #
 
-# Number of worker threads in MaxScale
-[maxscale]
-threads=<%= node['maxscale']['threads'] %>
-
-# Define a monitor that can be used to determine the state and role of the servers.
-<% if node['maxscale']['monitor']['module'] == 'mysqlmon' %>
-[MySQL Monitor]
-type=monitor
-module=mysqlmon
-servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
-user=<%= node['maxscale']['monitor']['user'] %>
-passwd=<%= node['maxscale']['monitor']['pwd'] %>
-monitor_interval=<%= node['maxscale']['monitor']['interval'] %>
-backend_connect_timeout=<%= node['maxscale']['monitor']['backend_connect_timeout'] %>
-backend_read_timeout=<%= node['maxscale']['monitor']['backend_read_timeout'] %>
-backend_write_timeout=<%= node['maxscale']['monitor']['backend_write_timeout'] %>
-detect_replication_lag=<%= node['maxscale']['monitor']['detect_replication_lag'] %>
-detect_stale_master=<%= node['maxscale']['monitor']['detect_stale_master'] %>
-<% end %>
-
-<% if node['maxscale']['monitor']['module'] == 'galeramon' %>
-[Galera Monitor]
-type=monitor
-module=galeramon
-servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
-user=<%= node['maxscale']['monitor']['user'] %>
-passwd=<%= node['maxscale']['monitor']['pwd'] %>
-monitor_interval=<%= node['maxscale']['monitor']['monitor_interval'] %>
-disable_master_failback=<%= node['maxscale']['monitor']['disable_master_failback'] %>
-<% end %>
-
-# Filter definition
-
-<% @maxscale_filters.each do |filter| %>
-[<%= filter['name'] %>]
-type=filter
-module=<%= filter['module'] %>
-<% if filter['module'] == 'qlafilter' %>
-options=<%= filter['options'] %>
-<% end %>
-<% if filter['module'] == 'regexfilter' %>
-match=<%= filter['match'] %>
-replace=<%= filter['replace'] %>
-<% end %>
-<% if filter['module'] == 'topfilter' %>
-count=<%= filter['count'] %>
-filebase=<%= filter['filebase'] %>
-<% end %>
-<% if filter['module'] == 'teefilter' %>
-match=<%= filter['match'] %>
-service=<%= filter['service'] %>
+<% @config.each do |section, content| %>
+[<%= section %>]
+<% content.each do |key, value| %>
+<%= key %>=<%= value %>
 <% end %>
 
 <% end %>
 
-# A series of service definition
-
-<% @maxscale_routers.each do |router| %>
-[<%= router['name'] %>]
-type=<%= router['type'] %>
-router=<%= router['router'] %>
-servers=<%= @maxscale_servers.map { |server| server['name'] }.join(',') %>
-user=<%= router['user'] %>
-passwd=<%= router['passwd'] %>
-
-<% end %>
-
-# Listener definitions for the services
-
-<% @maxscale_listeners.each do |listener| %>
-[<%= listener['name'] %>]
-type=<%= listener['type'] %>
-service=<%= listener['service'] %>
-protocol=<%= listener['protocol'] %>
-address=<%= listener['address'] %>
-port=<%= listener['port'] %>
-
-<% end %>
-
-# Definition of the servers
-
-<% @maxscale_servers.each do |server| %>
-[<%= server['name'] %>]
-type=<%= server['type'] %>
-address=<%= server['address'] %>
-port=<%= server['port'] %>
-protocol=<%= server['protocol'] %>
-
-<% end %>
+<%= @databag %>

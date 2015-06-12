@@ -17,45 +17,13 @@
 # limitations under the License.
 #
 
-all_filters = []
-all_servers = []
-all_listeners = []
-all_routers = []
-
-if node['maxscale']['databag']['filter']['enabled']
+if node['maxscale']['databag']['enabled']
   # Load filter from Data Bags
-  databag_filter = data_bag_item(node['maxscale']['databag']['filter']['name'], \
-                                 node['maxscale']['databag']['filter']['item_name'])
-  all_filters = node['maxscale']['filter'] + databag_filter['filter']
+  databag_config = data_bag_item(node['maxscale']['databag']['name'], \
+                                 node['maxscale']['databag']['item'])
+  config_all = node['maxscale']['config'].merge(databag_config['config'])
 else
-  all_filters = node['maxscale']['filter']
-end
-
-if node['maxscale']['databag']['server']['enabled']
-  # Load servers from Data Bags
-  databag_server = data_bag_item(node['maxscale']['databag']['server']['name'], \
-                                 node['maxscale']['databag']['server']['item_name'])
-  all_servers = node['maxscale']['server'] + databag_server['server']
-else
-  all_servers = node['maxscale']['server']
-end
-
-if node['maxscale']['databag']['listener']['enabled']
-  # Load listeners from Data Bags
-  databag_server = data_bag_item(node['maxscale']['databag']['listener']['name'], \
-                                 node['maxscale']['databag']['listener']['item_name'])
-  all_listeners = node['maxscale']['listener'] + databag_server['listener']
-else
-  all_listeners = node['maxscale']['listener']
-end
-
-if node['maxscale']['databag']['router']['enabled']
-  # Load listeners from Data Bags
-  databag_server = data_bag_item(node['maxscale']['databag']['router']['name'], \
-                                 node['maxscale']['databag']['router']['item_name'])
-  all_routers = node['maxscale']['router'] + databag_server['router']
-else
-  all_routers = node['maxscale']['router']
+  config_all = node['maxscale']['config']
 end
 
 template '/usr/local/skysql/maxscale/etc/MaxScale.cnf' do
@@ -63,9 +31,6 @@ template '/usr/local/skysql/maxscale/etc/MaxScale.cnf' do
   action :create
   notifies :restart, 'service[maxscale]', :delayed
   variables(
-    maxscale_filters: all_filters,
-    maxscale_servers: all_servers,
-    maxscale_listeners: all_listeners,
-    maxscale_routers: all_routers
+    config: config_all
     )
 end

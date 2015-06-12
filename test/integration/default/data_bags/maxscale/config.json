@@ -1,0 +1,11 @@
+{
+    "id": "config",
+    "config": {
+        "server3": {
+            "type": "server",
+            "address": "127.0.0.3",
+            "port": 3306,
+            "protocol": "MySQLBackend"
+        }
+    }
+}

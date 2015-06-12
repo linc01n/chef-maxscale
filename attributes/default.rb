@@ -17,41 +17,9 @@
 # limitations under the License.
 #
 
-# Number of worker threads in MaxScale
-default['maxscale']['threads'] = 4
+# MaxScale
+default['maxscale']['config'] = {}
 
-# Definition of the monitor
-default['maxscale']['monitor']['module'] = 'mysqlmon'
-default['maxscale']['monitor']['user'] = 'myuser'
-default['maxscale']['monitor']['pwd'] = 'mypwd'
-default['maxscale']['monitor']['interval'] = 10_000
-default['maxscale']['monitor']['backend_connect_timeout'] = ''
-default['maxscale']['monitor']['backend_read_timeout'] = ''
-default['maxscale']['monitor']['backend_write_timeout'] = ''
-default['maxscale']['monitor']['detect_replication_lag'] = ''
-default['maxscale']['monitor']['detect_stale_master'] = ''
-default['maxscale']['monitor']['disable_master_failback'] = ''
-
-# Definition of the servers
-default['maxscale']['listener'] = []
-default['maxscale']['databag']['listener']['enabled'] = false
-default['maxscale']['databag']['listener']['name'] = 'maxscale'
-default['maxscale']['databag']['listener']['item_name'] = 'listener'
-
-# Definition of the servers
-default['maxscale']['server'] = []
-default['maxscale']['databag']['server']['enabled'] = false
-default['maxscale']['databag']['server']['name'] = 'maxscale'
-default['maxscale']['databag']['server']['item_name'] = 'server'
-
-# Definition of the filters
-default['maxscale']['filter'] = []
-default['maxscale']['databag']['filter']['enabled'] = false
-default['maxscale']['databag']['filter']['name'] = 'maxscale'
-default['maxscale']['databag']['filter']['item_name'] = 'filter'
-
-# Definition of the routers
-default['maxscale']['filter'] = []
-default['maxscale']['databag']['router']['enabled'] = false
-default['maxscale']['databag']['router']['name'] = 'maxscale'
-default['maxscale']['databag']['router']['item_name'] = 'router'
+default['maxscale']['databag']['enabled'] = false
+default['maxscale']['databag']['name'] = 'maxscale'
+default['maxscale']['databag']['item'] = 'config'
