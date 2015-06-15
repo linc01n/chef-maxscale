@@ -21,6 +21,8 @@ case node['platform_family']
 when 'debian'
   include_recipe 'apt'
 
+  package 'apt-transport-https' if node['platform_version'] < '8'
+
   apt_repository 'maxscale' do
     uri node['mariadb']['apt']['uri']
     arch node['mariadb']['apt']['arch']

@@ -26,7 +26,7 @@ else
   config_all = node['maxscale']['config']
 end
 
-template '/usr/local/skysql/maxscale/etc/MaxScale.cnf' do
+template '/usr/local/mariadb-maxscale/etc/MaxScale.cnf' do
   source 'maxscale.cnf.erb'
   action :create
   notifies :restart, 'service[maxscale]', :delayed

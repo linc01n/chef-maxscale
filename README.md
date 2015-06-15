@@ -10,6 +10,7 @@ The following 64-bit platforms are supported:
 
 * CentOS 7.0
 * Ubuntu 14.04 LTS
+* Debian 7.8
 
 ### Cookbooks
 
@@ -30,14 +31,26 @@ The following 64-bit platforms are supported:
 Just write your config to the `node['maxscale']['config']` attribute or use a Data Bag. See `.kitchen.yml` for
 more examples.
 
-```json
+```
 default['maxscale']['config'] = {
+  maxscale: {
+    threads: 2
+  }
   server1: {
     type: 'server',
     address: '127.0.0.1',
     port: 3306,
     protocol: 'MySQLBackend'
   }
+  server2: {
+    type: 'server',
+    address: '127.0.0.1',
+    port: 3306,
+    protocol: 'MySQLBackend'
+  }
+  ...
+  ...
+  ...
 }
 ```
 

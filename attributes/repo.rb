@@ -18,16 +18,22 @@
 #
 
 # Apt
-default['mariadb']['apt']['uri'] = 'https://downloads.mariadb.com/software/MaxScale/maxscale/DEB/'
+case node['platform']
+when 'ubuntu'
+  default['mariadb']['apt']['uri'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/repo/ubuntu/'
+when 'debian'
+  default['mariadb']['apt']['uri'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/repo/debian/'
+end
+
 default['mariadb']['apt']['arch'] = 'amd64'
 default['mariadb']['apt']['components'] =  ['main']
-default['mariadb']['apt']['key'] = 'https://downloads.mariadb.com/software/MaxScale/MaxScale-GPG-KEY.public'
+default['mariadb']['apt']['key'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/Maxscale-GPG-KEY.public'
 default['mariadb']['apt']['package'] = 'maxscale'
 
 # Yum
 default['mariadb']['yum']['description'] = 'MaxScale'
-default['mariadb']['yum']['baseurl'] = 'https://downloads.mariadb.com/software/MaxScale/maxscale/RPM/centos7/'
-default['mariadb']['yum']['gpgkey'] = 'https://downloads.mariadb.com/software/MaxScale/MaxScale-GPG-KEY.public'
+default['mariadb']['yum']['baseurl'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/yum/centos7/x86_64/'
+default['mariadb']['yum']['gpgkey'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/Maxscale-GPG-KEY.public'
 default['mariadb']['yum']['gpgcheck'] = true
 default['mariadb']['yum']['sslverify'] = true
 default['mariadb']['yum']['package'] = 'maxscale'
