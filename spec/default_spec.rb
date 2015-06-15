@@ -28,7 +28,7 @@ describe 'maxscale::default' do
     end
 
     it 'create maxscale config' do
-      expect(chef_run).to create_template('/usr/local/skysql/maxscale/etc/MaxScale.cnf')
+      expect(chef_run).to create_template('/usr/local/mariadb-maxscale/etc/MaxScale.cnf')
     end
 
     it 'enable maxscale service' do
@@ -63,7 +63,7 @@ describe 'maxscale::default' do
     end
 
     it 'create maxscale config' do
-      expect(chef_run).to create_template('/usr/local/skysql/maxscale/etc/MaxScale.cnf')
+      expect(chef_run).to create_template('/usr/local/mariadb-maxscale/etc/MaxScale.cnf')
     end
 
     it 'enable maxscale service' do
