@@ -25,3 +25,9 @@ when 'rhel'
   package node['mariadb']['yum']['package']
 
 end
+
+%w(maxadmin  maxkeys  maxpasswd  maxscale).each do |bin|
+  link "/usr/local/sbin/#{bin}" do
+    to "/usr/local/mariadb-maxscale/bin/#{bin}"
+  end
+end

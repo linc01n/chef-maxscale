@@ -7,6 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '2.1.2'
 
 supports 'ubuntu'
+supports 'debian'
 supports 'centos'
 
 depends 'apt'

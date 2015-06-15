@@ -24,5 +24,5 @@ include_recipe 'maxscale::configure'
 service 'maxscale' do
   supports reload: true, status: true, restart: true
   action :enable
-  subscribes :reload, 'template[/usr/local/skysql/maxscale/etc/MaxScale.cnf]', :immediately
+  subscribes :reload, 'template[/usr/local/mariadb-maxscale/etc/MaxScale.cnf]', :immediately
 end
