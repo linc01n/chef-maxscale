@@ -32,7 +32,7 @@ default['mariadb']['apt']['package'] = 'maxscale'
 
 # Yum
 default['mariadb']['yum']['description'] = 'MaxScale'
-default['mariadb']['yum']['baseurl'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/yum/centos7/x86_64/'
+default['mariadb']['yum']['baseurl'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/yum/centos$releasever/x86_64/'
 default['mariadb']['yum']['gpgkey'] = 'https://downloads.mariadb.com/software/mariadb-maxscale/1.1/Maxscale-GPG-KEY.public'
 default['mariadb']['yum']['gpgcheck'] = true
 default['mariadb']['yum']['sslverify'] = true

@@ -8,7 +8,7 @@ This cookbook installs and configure maxscale from the MariaDB repositroy.
 
 The following 64-bit platforms are supported:
 
-* CentOS 7.0
+* CentOS 5.0 - 7.0
 * Ubuntu 14.04 LTS
 * Debian 7.8
 
